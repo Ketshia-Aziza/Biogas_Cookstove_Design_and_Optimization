@@ -15,9 +15,9 @@
 Clean cooking technologies require optimized fuel–air mixing and controlled heat distribution to improve thermal efficiency and reduce pollutant emissions. As part of my Master’s thesis, CFD simulations were conducted to analyze the airflow behavior, thermal fields, and combustion characteristics of a household biogas burner.
 
 **The objectives of this study were:**
-* **Evaluate** fuel–air mixing quality inside the burner.
-* **Assess** flame stabilization and temperature distribution.
-* **Validate** analytical design parameters calculated using a custom MATLAB-based model.
+**Dimensioning:** Establish burner geometry using analytical engineering models.
+* **Fluid Analysis:** Evaluate fuel–air mixing quality inside the burner (Cold-Flow).
+* **Combustion Modeling:** Assess flame stabilization, temperature distribution, and emission performances using CFD.
 
 ---
 
@@ -26,72 +26,46 @@ This project follows a "Computational X" workflow, integrating parametric design
 
 | Stage | Software | Function |
 | :--- | :--- | :--- |
-| **Analytical Design** | MATLAB | Dimensioning of injector, mixing tube, and air ports. |
+| **Analytical Design** | MATLAB | Dimensioning of injector, mixing tube, air ports, and the number and configuration of the flame ports. |
 | **3D Modeling** | SolidWorks | Generating watertight CAD geometries. |
-| **Simulation** | ANSYS Fluent R2025 | CFD Analysis (Mixing & Reacting Flows). |
-
-### Geometry and Mesh Generation
-A watertight polyhedral hex-core mesh was constructed with local refinement in high-gradient zones (fuel/air inlets and combustion zones). This ensured accurate resolution of velocity, temperature, and species gradients while maintaining computational efficiency.
+| **Simulation** | ANSYS Fluent R2025 (student) | CFD Analysis (Mixing & Reacting Flows). |
 
 ---
 
-## 3. 🧪 Numerical Solver Setup
+## 3. 🧪 Numerical Setup & Validation Strategy
 
-### 3.1 Mixing Flow Simulation (Non-Reacting)
-Analyzes the quality of fuel–air mixing inside the mixing tube prior to combustion.
-* **Solver:** Pressure-based, steady-state.
-* **Models:** Species Transport (non-reacting), Realizable k–ε Turbulence.
-* **Boundary Conditions:** Mass flow inlet (60% CH₄, 40% CO₂) and air inlet (21% O₂).
+### 3.1 Mixing Flow (Cold-Flow)
+* **Role:** Analyzes the quality of fuel–air mixing.
+* **Internal Validation:** The results of the cold-flow simulation were **validated against the analytical design parameters** calculated in MATLAB (e.g., outlet velocity and mass flow rates) to ensure simulation accuracy.
 
 ### 3.2 Combustion Simulation (Reacting Flow)
-Analyzes flame structure, temperature fields, and species distribution.
-* **Models:** Non-premixed combustion, PDF approach for turbulent mixing.
-* **Radiation:** P1 model.
-* **Physics:** Non-adiabatic energy treatment; Stoichiometric mixture fraction refinement.
+* **Role:** Analyzes flame structure and temperature fields.
+* **Computational Method:** Performed entirely within ANSYS Fluent using the Non-premixed combustion model and PDF approach (MATLAB was not used for kinetics).
+
+### 3.3 External Validation (Literature-Based)
+Due to time constraints for direct experimental testing, the CFD simulation results were validated through an **extensive comparative analysis with published results from credible literature**. This involved benchmarking my numerical findings against existing experimental and numerical studies on similar biogas burner designs.
 
 ---
 
 ## 4. 📊 Results and Interpretation
 
 ### 4.1 Cold-Flow Analysis
-The simulation confirmed that the analytically calculated injector and port dimensions provided a **uniform velocity profile** at the burner outlet, essential for preventing flash-back or lift-off and ensuring stable combustion.
+The simulation confirmed that the analytical dimensions (injector/port sizes) provided a uniform velocity profile, preventing flash-back or lift-off.
 
 ### 4.2 Reacting Flow Analysis
-The combustion results validated a stable flame anchored near the burner ports with the following characteristics:
-
-| Metric | Result | Interpretation |
-| :--- | :--- | :--- |
-| **Max Temperature** | **2063 K** | Combustion occurring within the stoichiometric reaction zone. |
-| **O₂ Contours** | Depletion at front | Confirms proper stoichiometric balance and stabilization. |
-| **CO₂ Contours** | Post-flame conc. | Indicates complete and efficient fuel utilization. |
-| **CO Contours** | Localized core | Rapid downstream oxidation to CO₂ confirms low emissions. |
-| **CH₄ Contours** | Rapid consumption | Effective fuel-air mixing and immediate oxidation. |
-
-### Visual Validation
-*(Upload your contours to a folder named `images` and update the links below)*
-
-![Temperature Contour](images/temperature_contour.png)  
-*Figure 1: Temperature contour showing stabilized flame at 2063K.*
+The results showed a stable flame anchored near the burner ports:
+* **Max Temperature:** **2063 K**, aligned with stoichiometric reaction zones.
+* **Emissions:** Localized CO formation with rapid oxidation to CO2, suggesting efficient fuel conversion.
+* **CH4 Consumption:** Rapid fuel oxidation immediately above ports, confirming effective burner head design.
 
 ---
 
 ## 5. 🔗 Integration & Impact
-This repository demonstrates a complete engineering design loop:
-1. **Parametric Modeling:** Using MATLAB for theoretical engineering foundations.
-2. **CFD Validation:** Using ANSYS Fluent to refine and prove the design through numerical analysis.
-3. **Policy Relevance:** This data-driven approach supports clean energy transition strategies by providing a framework for low-emission cooking solutions in developing contexts.
-
-## ⚠️ Scope & Limitations
-* Simulations were conducted under **steady-state** assumptions using RANS turbulence modeling.
-* Future work could include transient simulations, detailed chemical kinetic models, and sensitivity analyses.
-
----
+This repository demonstrates the integration of **Parametric Analytical Modeling** and **Advanced CFD Analysis**. It highlights a rigorous approach to engineering validation via literature benchmarking, a critical skill for high-level research in the energy transition.
 
 ## 📂 Repository Structure
-* `/MATLAB`: Analytical design and ranking scripts.
+* `/MATLAB`: Analytical design scripts.
 * `/CAD`: STEP and STL files of the burner geometry.
-* `/Docs`: Detailed technical walkthrough and parameter tables.
-* `/Images`: Result contours (Temperature, CO, CO2, O2, CH4) and mesh previews.
-
----
+* `/Docs`: Detail Technical walkthrough of the simulation and validation methodology.
+* `/Images`: Result contours (Temperature, CO, CO2, O2, CH4).
 *For more information or collaboration inquiries, feel free to reach out via [LinkedIn](https://www.linkedin.com/in/ketshia-ngalula-aziza-b5b00b122).*
